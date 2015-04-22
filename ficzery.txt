@@ -1,0 +1,3 @@
+-dodawanie/usuwanie zajęć
+-dodawanie/usuwanie kolokwiów,terminów projektów + przypomnienie (zgodnie z preferencjami np dzien lub tydzien wczesniej)
+-zapisywanie do jsona
