@@ -4,21 +4,21 @@
 <?import java.lang.*?>
 <?import javafx.scene.layout.*?>
 
-<VBox prefHeight="500.0" prefWidth="900.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1">
+<VBox fx:id="root" prefHeight="500.0" prefWidth="900.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controller.MainWindowController">
    <children>
       <MenuBar VBox.vgrow="ALWAYS">
          <menus>
             <Menu mnemonicParsing="false" text="File">
                <items>
-                  <MenuItem mnemonicParsing="false" text="Open" />
-                  <MenuItem mnemonicParsing="false" text="Save" />
-                  <MenuItem mnemonicParsing="false" text="Save As" />
-                  <MenuItem mnemonicParsing="false" text="Close" />
+                  <MenuItem mnemonicParsing="false" onAction="#openButtonClicked" text="Open" />
+                  <MenuItem mnemonicParsing="false" onAction="#saveButtonClicked" text="Save" />
+                  <MenuItem mnemonicParsing="false" onAction="#saveAsButtonClicked" text="Save As" />
+                  <MenuItem mnemonicParsing="false" onAction="#closeButtonClicked" text="Close" />
                </items>
             </Menu>
             <Menu mnemonicParsing="false" text="Help">
                <items>
-                  <MenuItem mnemonicParsing="false" text="About" />
+                  <MenuItem mnemonicParsing="false" onAction="#aboutButtonClicked" text="About" />
                </items>
             </Menu>
          </menus>
@@ -32,12 +32,12 @@
                         <Label text="Subjects" />
                      </children>
                   </HBox>
-                  <ListView minHeight="50.0" prefHeight="100.0" VBox.vgrow="ALWAYS" />
+                  <ListView fx:id="subjectsListView" minHeight="50.0" prefHeight="100.0" VBox.vgrow="ALWAYS" />
                   <HBox alignment="CENTER_RIGHT" spacing="5.0">
                      <children>
-                        <Button mnemonicParsing="false" prefWidth="100.0" text="Edit" HBox.hgrow="ALWAYS" />
-                        <Button mnemonicParsing="false" text="-" />
-                        <Button mnemonicParsing="false" text="+" />
+                        <Button fx:id="editSubjectButton" mnemonicParsing="false" onAction="#editSubjectButtonClicked" prefWidth="100.0" text="Edit" HBox.hgrow="ALWAYS" />
+                        <Button fx:id="removeSubjectButton" mnemonicParsing="false" onAction="#removeSubjectButtonClicked" text="-" />
+                        <Button fx:id="addSubjectButton" mnemonicParsing="false" onAction="#addSubjectButtonClicked" text="+" />
                      </children>
                   </HBox>
                </children>

@@ -2,6 +2,7 @@ package application;
 	
 import java.net.URL;
 
+import managers.ApplicationManager;
 import javafx.application.Application;
 import javafx.fxml.FXMLLoader;
 import javafx.stage.Stage;
