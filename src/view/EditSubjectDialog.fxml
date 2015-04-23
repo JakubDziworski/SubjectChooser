@@ -5,25 +5,18 @@
 <?import java.lang.*?>
 <?import javafx.scene.layout.*?>
 
-
-<VBox maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="288.0" prefWidth="327.0" spacing="10.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1">
+<VBox fx:id="root" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="288.0" prefWidth="327.0" spacing="10.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controller.EditSubjectDialogController">
    <children>
-      <HBox alignment="CENTER" spacing="15.0">
+      <HBox alignment="CENTER_LEFT" spacing="15.0">
          <children>
             <Label text="Name" />
-            <TextField HBox.hgrow="ALWAYS" />
+            <TextField fx:id="nameTextBox" HBox.hgrow="ALWAYS" />
          </children>
       </HBox>
-      <HBox alignment="CENTER" spacing="15.0">
+      <HBox alignment="CENTER_LEFT" spacing="15.0">
          <children>
-            <Label text="Type" />
-            <TextField HBox.hgrow="ALWAYS" />
-         </children>
-      </HBox>
-      <HBox alignment="CENTER" spacing="15.0">
-         <children>
-            <Label text="Teacher" />
-            <TextField HBox.hgrow="ALWAYS" />
+            <Label text="Type" HBox.hgrow="NEVER" />
+            <ComboBox fx:id="typeComboBox" promptText="Choose Type" HBox.hgrow="ALWAYS" />
          </children>
       </HBox>
       <TableView editable="true" VBox.vgrow="ALWAYS">
@@ -38,14 +31,14 @@
       </TableView>
       <HBox alignment="CENTER_RIGHT" spacing="5.0">
          <children>
-            <Button mnemonicParsing="false" text="-" />
-            <Button mnemonicParsing="false" text="+" />
+            <Button mnemonicParsing="false" onAction="#deleteTermButtonClicked" text="-" />
+            <Button mnemonicParsing="false" onAction="#addTermButtonClicked" text="+" />
          </children>
       </HBox>
       <HBox alignment="CENTER" spacing="15.0">
          <children>
-            <Button mnemonicParsing="false" text="Apply" />
-            <Button mnemonicParsing="false" text="Cancel" />
+            <Button mnemonicParsing="false" onAction="#applyButtonClicked" text="Apply" />
+            <Button mnemonicParsing="false" onAction="#cancelButtonClicked" text="Cancel" />
          </children>
       </HBox>
    </children>

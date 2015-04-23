@@ -1,18 +1,12 @@
 package model;
 
 
-import com.google.gson.annotations.SerializedName;
-
 import exceptions.IllegalHourException;
 import exceptions.IllegalMinuteException;
 
 public class WeekDateTime {
-		@SerializedName("day")
 		Day day;
-
-		@SerializedName("godz")
 		int godz;
-		@SerializedName("min")
 		int min;
 		
 		public WeekDateTime() {

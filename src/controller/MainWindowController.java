@@ -43,29 +43,32 @@ public class MainWindowController implements Initializable {
 	private Parent root;
 	@FXML
 	private ListView<Subject> subjectsListView;
-	private ObservableList<Subject> listIViewtems;
+	private ObservableList<Subject> listViewtems;
 	
 	private SubjectManager.SubjectsListener subjectsListener = new SubjectManager.SubjectsListener () {
 		
 		@Override
 		public void onSubjectRemoved(Subject subject) {
-			listIViewtems.remove(subject);
+			listViewtems.remove(subject);
 		}
 		
 		@Override
 		public void onSubjectChanged(Subject subject) {
+			final int index = listViewtems.indexOf(subject);
+			listViewtems.remove(subject);
+			listViewtems.add(index,subject);
 		}
 		
 		@Override
 		public void onSubjectAdded(Subject subject) {
-			listIViewtems.add(subject);
+			listViewtems.add(subject);
 		}
 	};
 	
 	@Override
 	public void initialize(URL location, ResourceBundle resources) {
-		listIViewtems = FXCollections.observableArrayList();
-		subjectsListView.setItems(listIViewtems);
+		listViewtems = FXCollections.observableArrayList();
+		subjectsListView.setItems(listViewtems);
 		SubjectManager.getInstance().addSubjectsListener(subjectsListener);
 	}
 	
@@ -73,16 +76,15 @@ public class MainWindowController implements Initializable {
 	public void editSubjectButtonClicked(ActionEvent event) {
 		if(subjectsListView.getSelectionModel().isEmpty()) return;
 		final int index = subjectsListView.getSelectionModel().getSelectedIndex();
-		Subject subject = listIViewtems.get(index);
+		Subject subject = listViewtems.get(index);
 		
-		 final String mainWindowFilePath = ApplicationManager.Resources.VIEW_EDIT_SUBJECT_DIALOG_FILE_PATH;
-		 final URL mainWindowFileURL = getClass().getResource(mainWindowFilePath);
+		 final String editDialogFilePath = ApplicationManager.Resources.VIEW_EDIT_SUBJECT_DIALOG_FILE_PATH;
+		 final URL editDialogFileURL = getClass().getResource(editDialogFilePath);
 		 try {
-			Parent root = FXMLLoader.load(mainWindowFileURL);
-			Stage dialog = new Stage();
-			 Scene scene = new Scene(root);
-			 dialog.setScene(scene);
-			 dialog.show();
+			 FXMLLoader loader = new FXMLLoader(editDialogFileURL);
+			 Parent root = loader.load();
+			 EditSubjectDialogController controller = loader.getController();
+			 controller.setSubject(subject);
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
@@ -97,7 +99,7 @@ public class MainWindowController implements Initializable {
 	@FXML
 	public void removeSubjectButtonClicked(ActionEvent event) {
 		final int index = subjectsListView.getSelectionModel().getSelectedIndex();
-		Subject subject = listIViewtems.get(index);
+		Subject subject = listViewtems.get(index);
 		SubjectManager.getInstance().removeSubject(subject);
 	}
 	
@@ -113,7 +115,8 @@ public class MainWindowController implements Initializable {
 	
 	@FXML
 	public void openButtonClicked(ActionEvent event) {
-		
+		Stage currentStage = (Stage)root.getScene().getWindow();
+		FileManager.getInstance().Load(currentStage);
 	}
 	
 	@FXML

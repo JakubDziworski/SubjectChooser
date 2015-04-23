@@ -10,8 +10,6 @@ import org.simpleframework.xml.Root;
 public class Term {
 
 	@Element
-	Subject subject;
-	@Element
 	private String teacher;
 	@Element
 	private WeekDateTime start;
@@ -19,7 +17,6 @@ public class Term {
 	private WeekDateTime end;
 	
 	public Term() {
-		subject = new Subject();
 		teacher = "Unknown";
 		start = new WeekDateTime();
 		end = new WeekDateTime();
@@ -50,12 +47,5 @@ public class Term {
 	public void setEnd(WeekDateTime end) {
 		this.end = end;
 		TermManager.getInstance().notifyTermChanged(this);
-	}
-	public Subject getSubject() {
-		return subject;
-	}
-
-	public void setSubject(Subject subject) {
-		this.subject = subject;
 	}
 }
