@@ -1,22 +1,29 @@
 package model;
 
 
+
 import exceptions.IllegalHourException;
 import exceptions.IllegalMinuteException;
 
-public class WeekDateTime {
-		Day day;
-		int godz;
-		int min;
+public class WeekDateTime implements Comparable<WeekDateTime> {
+		private Day day;
+		private int hour;
+		private int min;
 		
-		public WeekDateTime() {
-			this(Day.MON,0,0);
-		}
-		public WeekDateTime(Day day, int godz, int min) {
+		public WeekDateTime(Day day, int hour, int min) throws IllegalHourException, IllegalMinuteException {
 			super();
 			this.day = day;
-			this.godz = godz;
-			this.min = min;
+			this.setHour(hour);
+			this.setMin(min);
+		}
+		
+		public static WeekDateTime DefaultDateTime() {
+			try {
+				return new WeekDateTime(Day.MON,0,0);
+			} catch (IllegalHourException | IllegalMinuteException e) {
+				e.printStackTrace();
+			}
+			return null;
 		}
 		
 		public Day getDay() {
@@ -25,12 +32,12 @@ public class WeekDateTime {
 		public void setDay(Day day) {
 			this.day = day;
 		}
-		public int getGodz() {
-			return godz;
+		public int getHour() {
+			return hour;
 		}
-		public void setGodz(int godz) throws IllegalHourException {
+		public void setHour(int godz) throws IllegalHourException {
 			if(godz > 24 || godz < 0) throw new IllegalHourException();
-			this.godz = godz;
+			this.hour = godz;
 		}
 		public int getMin() {
 			return min;
@@ -48,5 +55,44 @@ public class WeekDateTime {
 			FRI,
 			SAT,
 			SUN
+		}
+		
+		
+		/**
+		 * @return Returns minutes from Monday 00:00
+		 */
+		public int toMinutes() {
+			return day.ordinal()*1440 + getHour()*60 + getMin();
+		}
+
+		@Override
+		public int compareTo(WeekDateTime otherDate) {
+			return (int) Math.signum(this.toMinutes() - otherDate.toMinutes());
+		}
+		@Override
+		public int hashCode() {
+			final int prime = 31;
+			int result = 1;
+			result = prime * result + day.ordinal();
+			result = prime * result + hour;
+			result = prime * result + min;
+			return result;
+		}
+		@Override
+		public boolean equals(Object obj) {
+			if (this == obj)
+				return true;
+			if (obj == null)
+				return false;
+			if (getClass() != obj.getClass())
+				return false;
+			WeekDateTime other = (WeekDateTime) obj;
+			if (day != other.day)
+				return false;
+			if (hour != other.hour)
+				return false;
+			if (min != other.min)
+				return false;
+			return true;
 		}
 }
