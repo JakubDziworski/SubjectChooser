@@ -5,7 +5,6 @@ import java.util.List;
 
 import managers.ApplicationManager;
 import managers.SubjectManager;
-import managers.TermManager;
 
 import org.simpleframework.xml.Element;
 import org.simpleframework.xml.ElementArray;
@@ -18,6 +17,7 @@ public class Subject {
 	private Subject.Type type;
 	@ElementList
 	List<Term> terms;
+
 	public Subject() {
 		terms = new ArrayList<Term>();
 		name = "Unknown";
@@ -39,6 +39,11 @@ public class Subject {
 		this.type = type;
 		SubjectManager.getInstance().notifySubjectChanged(this);
 	}
+	
+	public List<Term> getTerms() {
+		return terms;
+	}
+
 
 	public enum Type {
 		EXCERSISES,

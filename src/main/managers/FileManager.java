@@ -1,11 +1,6 @@
 package managers;
 
 import java.io.File;
-import java.io.FileWriter;
-import java.io.IOException;
-import java.util.Arrays;
-import java.util.List;
-
 import javafx.stage.FileChooser;
 import javafx.stage.Stage;
 
@@ -13,7 +8,6 @@ import org.simpleframework.xml.Serializer;
 import org.simpleframework.xml.core.Persister;
 
 import model.Subject;
-import model.Term;
 
 public class FileManager {
 	private static String FILE_FILTER =  "*.xml";
@@ -69,6 +63,7 @@ public class FileManager {
 			e.printStackTrace();
 		}
 	}
+	
 	private void saveSubjectsToFile(String fileName) {
 		File file = new File(fileName);
 		Serializer serializer = new Persister();

@@ -6,6 +6,8 @@ import model.WeekDateTime.Day;
 import org.junit.Before;
 import org.junit.Test;
 
+import exceptions.IllegalTermException;
+
 public class TermTest {
 
 	Term sut;
@@ -37,5 +39,15 @@ public class TermTest {
 		sut = new Term(new WeekDateTime(Day.MON,14,15),new WeekDateTime(Day.MON,16,15));
 		Term otherTerm = new Term(new WeekDateTime(Day.MON,11,15),new WeekDateTime(Day.MON,13,15));
 		assertFalse(sut.intersects(otherTerm));
+	}
+	
+	@Test(expected=IllegalTermException.class)
+	public void shouldThrowIllegalTermWhenStartAfterEnd() throws Exception {
+		sut = new Term(new WeekDateTime(Day.MON,14,15),new WeekDateTime(Day.MON,13,15));
+	}
+	
+	@Test(expected=IllegalTermException.class)
+	public void shouldThrowIllegalTermWhenStartEqualsEnd() throws Exception {
+		sut = new Term(new WeekDateTime(Day.MON,14,15),new WeekDateTime(Day.MON,14,15));
 	}
 }

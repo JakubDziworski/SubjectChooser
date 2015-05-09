@@ -15,5 +15,13 @@ public class ApplicationManager {
 		public static final String SUBJECT_TYPE_LECTURE = "Lecture";
 		public static final String SUBJECT_TYPE_SEMINARY = "Seminary";
 		public static final String SUBJECT_TYPE_UNKNOWN = "Unknown Type";
+		public static final String DAY_MON = "Monday";
+		public static final String DAY_TUE = "Tuesday";
+		public static final String DAY_WED = "Wednesday";
+		public static final String DAY_THU = "Thursday";
+		public static final String DAY_FRI = "Friday";
+		public static final String DAY_SAT = "Saturday";
+		public static final String DAY_SUN = "Sunday";
+		public static final String DAY_UNDEFINED = "Unknwon";
 	}
 }

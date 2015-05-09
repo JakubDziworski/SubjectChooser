@@ -11,8 +11,6 @@ import java.util.logging.Logger;
 import managers.ApplicationManager;
 import managers.FileManager;
 import managers.SubjectManager;
-import managers.TermManager;
-import managers.TermManager.TermsListener;
 import model.Subject;
 import model.Term;
 import javafx.collections.FXCollections;

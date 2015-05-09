@@ -2,6 +2,10 @@ package model;
 
 
 
+import java.util.ArrayList;
+import java.util.List;
+
+import managers.ApplicationManager;
 import exceptions.IllegalHourException;
 import exceptions.IllegalMinuteException;
 
@@ -54,7 +58,36 @@ public class WeekDateTime implements Comparable<WeekDateTime> {
 			THU,
 			FRI,
 			SAT,
-			SUN
+			SUN;
+
+			@Override
+			public String toString() {
+				switch (this) {
+					case MON : return ApplicationManager.Strings.DAY_MON;
+					case TUE : return ApplicationManager.Strings.DAY_TUE;
+					case WED : return ApplicationManager.Strings.DAY_WED;
+					case THU : return ApplicationManager.Strings.DAY_THU;
+					case FRI : return ApplicationManager.Strings.DAY_FRI;
+					case SAT : return ApplicationManager.Strings.DAY_SAT;
+					case SUN : return ApplicationManager.Strings.DAY_SUN;
+					default : return ApplicationManager.Strings.DAY_UNDEFINED;
+				}
+			}
+		}
+		
+		public static List<String> getAllPossibleDateTimesAsString() {
+			List<String> possibleTimes = new ArrayList<String>();
+			for(int i=0;i<25;i++) {
+				for(int j=0;j<60;j+=15) {
+					try {
+						possibleTimes.add((new WeekDateTime(Day.MON, i, j)).getTimeOnlyString());
+					} catch (IllegalHourException | IllegalMinuteException e) {
+						// TODO Auto-generated catch block
+						e.printStackTrace();
+					}
+				}
+			}
+			return possibleTimes;
 		}
 		
 		
@@ -63,6 +96,15 @@ public class WeekDateTime implements Comparable<WeekDateTime> {
 		 */
 		public int toMinutes() {
 			return day.ordinal()*1440 + getHour()*60 + getMin();
+		}
+		
+		public String getTimeOnlyString() {
+			return String.format("%d2:%d2",hour,min);
+		}
+		
+		public void setTimeFromString(String str) {
+			hour = Integer.valueOf(str.substring(0,2));
+			min = Integer.valueOf(str.substring(2,2));
 		}
 
 		@Override

@@ -1,7 +1,5 @@
 package model;
 
-import managers.TermManager;
-
 import org.simpleframework.xml.Element;
 import org.simpleframework.xml.Root;
 
@@ -30,7 +28,7 @@ public class Term {
 		verifyStartBeforeEnd();
 	}
 	
-	public Term DefaultTerm() {
+	public static Term DefaultTerm() {
 		final WeekDateTime start = WeekDateTime.DefaultDateTime();
 		WeekDateTime end = WeekDateTime.DefaultDateTime();
 		try {
@@ -48,7 +46,6 @@ public class Term {
 	
 	public void setTeacher(String teacher) {
 		this.teacher = teacher;
-		TermManager.getInstance().notifyTermChanged(this);
 	}
 	
 	public WeekDateTime getStart() {
@@ -58,7 +55,6 @@ public class Term {
 	public void setStart(WeekDateTime start) throws IllegalTermException {
 		this.start = start;
 		verifyStartBeforeEnd();
-		TermManager.getInstance().notifyTermChanged(this);
 	}
 	
 	public WeekDateTime getEnd() {
@@ -68,11 +64,10 @@ public class Term {
 	public void setEnd(WeekDateTime end) throws IllegalTermException {
 		this.end = end;
 		verifyStartBeforeEnd();
-		TermManager.getInstance().notifyTermChanged(this);
 	}
 	
 	private void verifyStartBeforeEnd() throws IllegalTermException {
-		if(start.compareTo(end) > 0) throw new IllegalTermException();
+		if(start.compareTo(end) >= 0) throw new IllegalTermException();
 	}
 	
 	public boolean weekDateTimeIsDuringTerm(WeekDateTime time) {
