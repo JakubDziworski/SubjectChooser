@@ -2,30 +2,22 @@ package controller;
 
 import java.io.IOException;
 import java.net.URL;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
 import java.util.ResourceBundle;
-import java.util.logging.Logger;
 
+import javafx.scene.control.Alert;
+import javafx.scene.control.PopupControl;
 import managers.ApplicationManager;
 import managers.FileManager;
 import managers.SubjectManager;
 import model.Subject;
-import model.Term;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
-import javafx.collections.ObservableMap;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
 import javafx.scene.Parent;
-import javafx.scene.Scene;
-import javafx.scene.control.Alert;
-import javafx.scene.control.Alert.AlertType;
 import javafx.scene.control.Button;
-import javafx.scene.control.Dialog;
 import javafx.scene.control.ListView;
 import javafx.stage.Stage;
 
@@ -103,7 +95,8 @@ public class MainWindowController implements Initializable {
 	
 	@FXML
 	public void aboutButtonClicked(ActionEvent event) {
-		Alert alert = new Alert(AlertType.INFORMATION);
+		PopupControl popup = new PopupControl();
+		Alert alert = new Alert(Alert.AlertType.INFORMATION);
 		alert.setTitle(ApplicationManager.Strings.DIALOG_ABOUT_TITLE);
 		alert.setHeaderText(ApplicationManager.Strings.DIALOG_ABOUT_HEADER_TEXT);
 		alert.setContentText(ApplicationManager.Strings.DIALOG_ABOUT_CONTENT_TEXT);
