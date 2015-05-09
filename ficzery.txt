@@ -1,3 +1,7 @@
 -dodawanie/usuwanie zajęć
 -dodawanie/usuwanie kolokwiów,terminów projektów + przypomnienie (zgodnie z preferencjami np dzien lub tydzien wczesniej)
 -zapisywanie do jsona
+
+zapytac:
+proper way handling business exceptions
+czy da sie nei lapac exceptionow gdy jestesmy pewni ze nie wystapia
