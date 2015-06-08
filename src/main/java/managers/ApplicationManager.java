@@ -40,5 +40,7 @@ public class ApplicationManager {
         public static final String DIALOG_ILLEGAL_TERM_HEADER = "Term end has to be after start!";
         public static final String DIALOG_ILLEGAL_TERM_DESC = "No changes were made.";
 
+        public static final String DIALOG_EDIT_TERM_HEADER = "Wrong class time provided";
+        public static final String DIALOG_EDIT_TERM_DESC_FORMAT = "%d invalid term(s). Correct them and try again";
     }
 }

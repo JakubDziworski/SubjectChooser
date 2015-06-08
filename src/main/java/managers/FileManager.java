@@ -55,6 +55,7 @@ public class FileManager {
 		Serializer serializer = new Persister();
     	try {
 			SubjectManager manager = serializer.read(SubjectManager.class, file);
+			SubjectManager.getInstance().clear();
 			manager.getSubjects().forEach(sub -> SubjectManager.getInstance().addSubject(sub));
 			previousFilePath = fileName;
 		} catch (Exception e) {

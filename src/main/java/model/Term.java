@@ -17,9 +17,14 @@ public class Term {
 	private WeekDateTime start;
 	@Element
 	private WeekDateTime end;
-	
+
+	/**
+	 * For Serialization use only
+	 */
+	private Term(){}
+
 	public Term(WeekDateTime start,WeekDateTime end) throws IllegalTermException {
-		this(start, end, ApplicationManager.Strings.DAY_UNDEFINED);
+		this(start, end, ApplicationManager.Strings.TEACH_UNDEFINED);
 	}
 	
 	public Term(WeekDateTime start,WeekDateTime end,String teacher) throws IllegalTermException {
@@ -65,7 +70,7 @@ public class Term {
 		this.end = end;
 	}
 	
-	private void verifyStartBeforeEnd(WeekDateTime start, WeekDateTime end) throws IllegalTermException {
+	public static void verifyStartBeforeEnd(WeekDateTime start, WeekDateTime end) throws IllegalTermException {
 		if(start.compareTo(end) >= 0) {
 			throw new IllegalTermException(start, end);
 		}

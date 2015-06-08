@@ -1,17 +1,19 @@
 package controller;
 
 import java.net.URL;
-import java.util.Arrays;
+import java.util.HashSet;
 import java.util.ResourceBundle;
+import java.util.Set;
 
+import com.sun.istack.internal.Nullable;
 import exceptions.ExceptionHandler;
 import exceptions.IllegalTermException;
-import exceptions.IllegalTimeOfDayException;
+import javafx.beans.property.SimpleStringProperty;
 import javafx.event.EventHandler;
+import javafx.scene.control.cell.TextFieldTableCell;
 import managers.SubjectManager;
 import model.*;
 import javafx.beans.property.SimpleObjectProperty;
-import javafx.beans.property.SimpleStringProperty;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
@@ -25,6 +27,7 @@ import javafx.scene.control.TableView;
 import javafx.scene.control.TextField;
 import javafx.scene.control.cell.ComboBoxTableCell;
 import javafx.stage.Stage;
+import utils.UiUtils;
 
 public class EditSubjectDialogController implements Initializable {
 
@@ -42,41 +45,51 @@ public class EditSubjectDialogController implements Initializable {
 	private TableColumn<Term,TimeOfDay> startTableColumn;
 	@FXML
 	private TableColumn<Term,TimeOfDay> endTableColumn;
+    @FXML
+    private TableColumn<Term,String> teacherTableColumn;
+
 	private Stage stage;
-	
 	private Subject subject;
 	private ObservableList<Term> terms;
+    private Set<Term> invalidTerms;
+
+    EventHandler<TableColumn.CellEditEvent<Term,Day>> dayChanged = event -> {
+        Term term = event.getRowValue();
+        term.getStart().setDay(event.getNewValue());
+        term.getEnd().setDay(event.getNewValue());
+    };
 
 	private EventHandler<TableColumn.CellEditEvent<Term,TimeOfDay>> startTimeOfTermChanged = event -> {
-		try {
-			Term term = event.getRowValue();
-			term.setStart(new WeekDateTime(term.getStart().getDay(), event.getNewValue()));
-		} catch (IllegalTermException e) {
-			ExceptionHandler.getInstance().handleException(e);
-			TimeOfDay newVal = event.getNewValue();
-			newVal = event.getOldValue();
-		}
+        final Term term = event.getRowValue();
+        final TimeOfDay newValue = event.getNewValue();
+        tryToUpdateTerm(term, newValue, null);
 	};
 
 	EventHandler<TableColumn.CellEditEvent<Term,TimeOfDay>> endTimeOfTermChanged = event -> {
-		try {
-			Term term = event.getRowValue();
-			term.setEnd(new WeekDateTime(term.getEnd().getDay(), event.getNewValue()));
-		} catch (IllegalTermException e) {
-			ExceptionHandler.getInstance().handleException(e);
-			TimeOfDay newVal = event.getNewValue();
-			newVal = event.getOldValue();
-		}
+        final Term term = event.getRowValue();
+        final TimeOfDay newValue = event.getNewValue();
+        tryToUpdateTerm(term,null, newValue);
 	};
 
-	EventHandler<TableColumn.CellEditEvent<Term,Day>> dayChanged = event -> {
-		Term term = event.getRowValue();
-		term.getStart().setDay(event.getNewValue());
-		term.getEnd().setDay(event.getNewValue());
-	};
+    private void tryToUpdateTerm(Term term, @Nullable TimeOfDay startTime,@Nullable TimeOfDay endTime) {
+        try {
+            if (startTime != null) term.getStart().setTimeOfDay(startTime);
+            if (endTime != null) term.getEnd().setTimeOfDay(endTime);
+            Term.verifyStartBeforeEnd(term.getStart(),term.getEnd());
+            invalidTerms.remove(term);
+        } catch (IllegalTermException e) {
+            ExceptionHandler.getInstance().handleException(e);
+            invalidTerms.add(term);
+        }
+    }
+
+    private EventHandler<TableColumn.CellEditEvent<Term,String>> teacherChanged = event -> {
+        Term term = event.getRowValue();
+        term.setTeacher(event.getNewValue());
+    };
 
 
-	@Override
+    @Override
 	public void initialize(URL location, ResourceBundle resources) {
 		typeComboBox.setItems(FXCollections.observableArrayList(Subject.Type.values()));
 		stage = new Stage();
@@ -90,7 +103,8 @@ public class EditSubjectDialogController implements Initializable {
 		nameTextBox.setText(subject.getName());
 		typeComboBox.setValue(subject.getSubjectType());
 		terms = FXCollections.observableArrayList(SubjectManager.getInstance().getSubjects().stream().filter(s -> s == subject).findFirst().get().getTerms());
-		initTable();
+		invalidTerms = new HashSet<>();
+        initTable();
 		initCells();
 		initCellEditedCallbacks();
 	}
@@ -99,6 +113,7 @@ public class EditSubjectDialogController implements Initializable {
 		dayTableColumn.setCellValueFactory(param -> new SimpleObjectProperty<Day>(param.getValue().getStart().getDay()));
 		startTableColumn.setCellValueFactory(param -> new SimpleObjectProperty<TimeOfDay>(param.getValue().getStart().getTimeOfDay()));
 		endTableColumn.setCellValueFactory(param -> new SimpleObjectProperty<TimeOfDay>(param.getValue().getEnd().getTimeOfDay()));
+        teacherTableColumn.setCellValueFactory(param -> new SimpleStringProperty(param.getValue().getTeacher()));
 		termsTableView.setItems(terms);
 	}
 
@@ -109,23 +124,22 @@ public class EditSubjectDialogController implements Initializable {
 		dayTableColumn.setCellFactory(ComboBoxTableCell.forTableColumn(subjectTypes));
 		startTableColumn.setCellFactory(ComboBoxTableCell.forTableColumn(possibleTimes));
 		endTableColumn.setCellFactory(ComboBoxTableCell.forTableColumn(possibleTimes));
+        teacherTableColumn.setCellFactory(TextFieldTableCell.forTableColumn());
 	}
 	
 	private void initCellEditedCallbacks() {
 		dayTableColumn.setOnEditCommit(dayChanged);
 		startTableColumn.setOnEditCommit(startTimeOfTermChanged);
 		endTableColumn.setOnEditCommit(endTimeOfTermChanged);
-	}
-
-	private void refreshTerm(Term term) {
-		final int index = terms.indexOf(term);
-		terms.remove(index);
-		terms.add(index,term);
-		termsTableView.getSelectionModel().select(index);
+        teacherTableColumn.setOnEditCommit(teacherChanged);
 	}
 
 	@FXML
 	public void applyButtonClicked(ActionEvent event) {
+        if(!invalidTerms.isEmpty()) {
+            UiUtils.showInvalidTermsWarmomgPopUp(invalidTerms);
+            return;
+        }
 		subject.setName(nameTextBox.getText());
 		subject.setType(typeComboBox.getValue());
 		stage.close();

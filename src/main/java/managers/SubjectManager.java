@@ -38,6 +38,10 @@ public class SubjectManager {
 			subjectsListeners.forEach(sl -> sl.onSubjectRemoved(subject));
 		}
 	}
+
+	public void clear() {
+		subjects.clear();
+	}
 	
 	public void notifySubjectChanged(Subject subject) {
 		subjectsListeners.forEach(sl -> sl.onSubjectChanged(subject));

@@ -5,7 +5,7 @@
 <?import java.lang.*?>
 <?import javafx.scene.layout.*?>
 
-<VBox fx:id="root" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="288.0" prefWidth="327.0" spacing="10.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controller.EditSubjectDialogController">
+<VBox fx:id="root" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="288.0" prefWidth="427.0" spacing="10.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controller.EditSubjectDialogController">
    <children>
       <HBox alignment="CENTER_LEFT" spacing="15.0">
          <children>
@@ -24,6 +24,7 @@
           <TableColumn fx:id="dayTableColumn" prefWidth="75.0" text="Day" />
           <TableColumn fx:id="startTableColumn" prefWidth="75.0" text="Start" />
             <TableColumn fx:id="endTableColumn" prefWidth="75.0" text="End" />
+            <TableColumn fx:id="teacherTableColumn" prefWidth="75.0" text="Teacher" />
         </columns>
          <columnResizePolicy>
             <TableView fx:constant="CONSTRAINED_RESIZE_POLICY" />

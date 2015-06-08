@@ -17,16 +17,21 @@ public class TimeOfDay {
 
     private int time; //in minutes
 
+    /**
+     * For Serialization use only
+     */
+    private TimeOfDay() {}
+
     public TimeOfDay(int hour, int minutes) throws IllegalTimeOfDayException {
         verifyHourFormat(hour);
         verifyMinuteFormat(minutes);
         setTottalInMinutes(hour * MINUTES_MAX + minutes);
     }
 
+
     public TimeOfDay(int minutes) throws IllegalTimeOfDayException {
         setTottalInMinutes(minutes);
     }
-
     /**
      * @return Time of a day at 00:00
      */

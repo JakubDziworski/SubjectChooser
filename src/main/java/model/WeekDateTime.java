@@ -7,6 +7,11 @@ public class WeekDateTime implements Comparable<WeekDateTime> {
     private Day day;
     private TimeOfDay timeOfDay;
 
+    /**
+     * For Serialization use only
+     */
+    private WeekDateTime() {}
+
     public WeekDateTime(Day day, TimeOfDay timeOfDay) {
         this.day = day;
         this.timeOfDay = timeOfDay;
@@ -19,8 +24,7 @@ public class WeekDateTime implements Comparable<WeekDateTime> {
     public static WeekDateTime DefaultDateTime() {
         try {
             return new WeekDateTime(Day.MON, 0, 0);
-        } catch (IllegalTimeOfDayException e) {
-        }
+        } catch (IllegalTimeOfDayException e) {}
         return null;
     }
 
