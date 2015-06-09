@@ -1,5 +1,6 @@
 package model;
 
+import exceptions.ExceptionHandler;
 import exceptions.IllegalHourFormatException;
 import exceptions.IllegalMinuteFormatException;
 import exceptions.IllegalTimeOfDayException;
@@ -9,7 +10,7 @@ import java.util.stream.Stream;
 /**
  * Created by Jakub Dziworski on 2015-05-09 for purposes of subject "Zaawansowane zagadnienia programowania w Javie"
  */
-public class TimeOfDay {
+public class TimeOfDay implements Comparable<TimeOfDay> {
     private static final int MINUTES_MIN = 0;
     private static final int HOURS_MIN = 0;
     private static final int MINUTES_MAX = 60;
@@ -76,17 +77,24 @@ public class TimeOfDay {
         return time;
     }
 
-    public static TimeOfDay[] getAllPossibleWithSeed(int seed) {
+    public static TimeOfDay[] getAllPossible(int min,int max,int seed) {
+        TimeOfDay start = null;
+        try {
+            start = new TimeOfDay(min);
+        } catch (IllegalTimeOfDayException e) {
+            ExceptionHandler.getInstance().handleException(e);
+        }
 
         return Stream
-                .iterate(TimeOfDay.defaultInstance(), prev -> {
+                .iterate(start, prev -> {
                     try {
                         return new TimeOfDay(prev.getTotalInMinutes() + seed);
                     } catch (IllegalTimeOfDayException e) {
+                        ExceptionHandler.getInstance().handleException(e);
                     }
                     return null;
                 })
-                .limit(HOURS_MAX * (MINUTES_MAX / seed))
+                .limit(((max - min) / seed) + 1)
                 .toArray(TimeOfDay[]::new);
     }
 
@@ -107,5 +115,10 @@ public class TimeOfDay {
     @Override
     public String toString() {
         return String.format("%02d:%02d", getHour(), getMinutes());
+    }
+
+    @Override
+    public int compareTo(TimeOfDay o) {
+        return Integer.compare(time,o.time);
     }
 }

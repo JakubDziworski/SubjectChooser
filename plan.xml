@@ -3,7 +3,7 @@
       <subject>
          <name>Zaawansowana Java</name>
          <type>LECTURE</type>
-         <terms class="com.sun.javafx.collections.ObservableListWrapper">
+         <terms class="java.util.ArrayList">
             <term>
                <teacher>Strobin</teacher>
                <start>
@@ -50,11 +50,26 @@
                </end>
             </term>
          </terms>
+         <selectedTerm>
+            <teacher>Strobin</teacher>
+            <start>
+               <day>WED</day>
+               <timeOfDay>
+                  <time>495</time>
+               </timeOfDay>
+            </start>
+            <end>
+               <day>WED</day>
+               <timeOfDay>
+                  <time>630</time>
+               </timeOfDay>
+            </end>
+         </selectedTerm>
       </subject>
       <subject>
          <name>Programowanie Interfejsow</name>
          <type>PROJECT</type>
-         <terms class="com.sun.javafx.collections.ObservableListWrapper">
+         <terms class="java.util.ArrayList">
             <term>
                <teacher>Szrajber</teacher>
                <start>
@@ -101,11 +116,26 @@
                </end>
             </term>
          </terms>
+         <selectedTerm>
+            <teacher>Andrzejczak</teacher>
+            <start>
+               <day>WED</day>
+               <timeOfDay>
+                  <time>480</time>
+               </timeOfDay>
+            </start>
+            <end>
+               <day>WED</day>
+               <timeOfDay>
+                  <time>615</time>
+               </timeOfDay>
+            </end>
+         </selectedTerm>
       </subject>
       <subject>
          <name>Sztuczna Inteligencja</name>
          <type>LECTURE</type>
-         <terms class="com.sun.javafx.collections.ObservableListWrapper">
+         <terms class="java.util.ArrayList">
             <term>
                <teacher>Lichy</teacher>
                <start>
@@ -122,11 +152,26 @@
                </end>
             </term>
          </terms>
+         <selectedTerm>
+            <teacher>Lichy</teacher>
+            <start>
+               <day>TUE</day>
+               <timeOfDay>
+                  <time>855</time>
+               </timeOfDay>
+            </start>
+            <end>
+               <day>TUE</day>
+               <timeOfDay>
+                  <time>945</time>
+               </timeOfDay>
+            </end>
+         </selectedTerm>
       </subject>
       <subject>
          <name>Sztuczna Inteligencja</name>
          <type>PROJECT</type>
-         <terms class="com.sun.javafx.collections.ObservableListWrapper">
+         <terms class="java.util.ArrayList">
             <term>
                <teacher>Lichy</teacher>
                <start>
@@ -173,6 +218,123 @@
                </end>
             </term>
          </terms>
+         <selectedTerm>
+            <teacher>Lipinski / Lichy</teacher>
+            <start>
+               <day>WED</day>
+               <timeOfDay>
+                  <time>705</time>
+               </timeOfDay>
+            </start>
+            <end>
+               <day>WED</day>
+               <timeOfDay>
+                  <time>840</time>
+               </timeOfDay>
+            </end>
+         </selectedTerm>
+      </subject>
+      <subject>
+         <name>Programowanie Gier Komp</name>
+         <type>LABORATORY</type>
+         <terms class="com.sun.javafx.collections.ObservableListWrapper">
+            <term>
+               <teacher>Szajerman</teacher>
+               <start>
+                  <day>TUE</day>
+                  <timeOfDay>
+                     <time>570</time>
+                  </timeOfDay>
+               </start>
+               <end>
+                  <day>TUE</day>
+                  <timeOfDay>
+                     <time>675</time>
+                  </timeOfDay>
+               </end>
+            </term>
+            <term>
+               <teacher>Wojciechowski</teacher>
+               <start>
+                  <day>WED</day>
+                  <timeOfDay>
+                     <time>975</time>
+                  </timeOfDay>
+               </start>
+               <end>
+                  <day>WED</day>
+                  <timeOfDay>
+                     <time>1050</time>
+                  </timeOfDay>
+               </end>
+            </term>
+            <term>
+               <teacher>Wojciechowski</teacher>
+               <start>
+                  <day>THU</day>
+                  <timeOfDay>
+                     <time>855</time>
+                  </timeOfDay>
+               </start>
+               <end>
+                  <day>THU</day>
+                  <timeOfDay>
+                     <time>945</time>
+                  </timeOfDay>
+               </end>
+            </term>
+         </terms>
+         <selectedTerm>
+            <teacher>Szajerman</teacher>
+            <start>
+               <day>TUE</day>
+               <timeOfDay>
+                  <time>570</time>
+               </timeOfDay>
+            </start>
+            <end>
+               <day>TUE</day>
+               <timeOfDay>
+                  <time>675</time>
+               </timeOfDay>
+            </end>
+         </selectedTerm>
+      </subject>
+      <subject>
+         <name>Programowanie kart i konsol</name>
+         <type>LABORATORY</type>
+         <terms class="com.sun.javafx.collections.ObservableListWrapper">
+            <term>
+               <teacher>Szajerman</teacher>
+               <start>
+                  <day>WED</day>
+                  <timeOfDay>
+                     <time>735</time>
+                  </timeOfDay>
+               </start>
+               <end>
+                  <day>WED</day>
+                  <timeOfDay>
+                     <time>825</time>
+                  </timeOfDay>
+               </end>
+            </term>
+         </terms>
+         <selectedTerm>
+            <teacher>Szajerman</teacher>
+            <start>
+               <day>WED</day>
+               <timeOfDay>
+                  <time>735</time>
+               </timeOfDay>
+            </start>
+            <end>
+               <day>WED</day>
+               <timeOfDay>
+                  <time>825</time>
+               </timeOfDay>
+            </end>
+         </selectedTerm>
       </subject>
    </subjects>
 </subjectManager>

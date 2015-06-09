@@ -1,15 +1,14 @@
 package controller;
 
 import java.net.URL;
-import java.util.HashSet;
-import java.util.ResourceBundle;
-import java.util.Set;
+import java.util.*;
 
 import com.sun.istack.internal.Nullable;
 import exceptions.ExceptionHandler;
 import exceptions.IllegalTermException;
 import javafx.beans.property.SimpleStringProperty;
 import javafx.event.EventHandler;
+import javafx.scene.control.*;
 import javafx.scene.control.cell.TextFieldTableCell;
 import managers.SubjectManager;
 import model.*;
@@ -21,15 +20,14 @@ import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
-import javafx.scene.control.ComboBox;
-import javafx.scene.control.TableColumn;
-import javafx.scene.control.TableView;
-import javafx.scene.control.TextField;
 import javafx.scene.control.cell.ComboBoxTableCell;
 import javafx.stage.Stage;
 import utils.UiUtils;
+import static managers.ApplicationManager.Constants;
 
 public class EditSubjectDialogController implements Initializable {
+
+	public static final int TIME_SEED = 15; //in minutes
 
 	@FXML
 	private Parent root;
@@ -51,7 +49,7 @@ public class EditSubjectDialogController implements Initializable {
 	private Stage stage;
 	private Subject subject;
 	private ObservableList<Term> terms;
-    private Set<Term> invalidTerms;
+    private List<Term> invalidTerms;
 
     EventHandler<TableColumn.CellEditEvent<Term,Day>> dayChanged = event -> {
         Term term = event.getRowValue();
@@ -77,11 +75,13 @@ public class EditSubjectDialogController implements Initializable {
             if (endTime != null) term.getEnd().setTimeOfDay(endTime);
             Term.verifyStartBeforeEnd(term.getStart(),term.getEnd());
             invalidTerms.remove(term);
-        } catch (IllegalTermException e) {
-            ExceptionHandler.getInstance().handleException(e);
-            invalidTerms.add(term);
-        }
-    }
+		} catch (IllegalTermException e) {
+			ExceptionHandler.getInstance().handleException(e);
+			if(!invalidTerms.contains(term)) {
+				invalidTerms.add(term);
+			}
+		}
+	}
 
     private EventHandler<TableColumn.CellEditEvent<Term,String>> teacherChanged = event -> {
         Term term = event.getRowValue();
@@ -103,7 +103,7 @@ public class EditSubjectDialogController implements Initializable {
 		nameTextBox.setText(subject.getName());
 		typeComboBox.setValue(subject.getSubjectType());
 		terms = FXCollections.observableArrayList(SubjectManager.getInstance().getSubjects().stream().filter(s -> s == subject).findFirst().get().getTerms());
-		invalidTerms = new HashSet<>();
+		invalidTerms = new ArrayList<>();
         initTable();
 		initCells();
 		initCellEditedCallbacks();
@@ -119,7 +119,7 @@ public class EditSubjectDialogController implements Initializable {
 
 	private void initCells() {
 		ObservableList<Day> subjectTypes = FXCollections.observableArrayList(Day.values());
-		ObservableList<TimeOfDay> possibleTimes = FXCollections.observableArrayList(TimeOfDay.getAllPossibleWithSeed(15));
+		ObservableList<TimeOfDay> possibleTimes = FXCollections.observableArrayList(TimeOfDay.getAllPossible(Constants.MIN_TIME,Constants.MAX_TIME, TIME_SEED));
 
 		dayTableColumn.setCellFactory(ComboBoxTableCell.forTableColumn(subjectTypes));
 		startTableColumn.setCellFactory(ComboBoxTableCell.forTableColumn(possibleTimes));

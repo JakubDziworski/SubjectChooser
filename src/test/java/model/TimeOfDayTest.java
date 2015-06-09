@@ -2,12 +2,15 @@ package model;
 
 import exceptions.IllegalHourFormatException;
 import exceptions.IllegalMinuteFormatException;
+import exceptions.IllegalTimeOfDayException;
 import org.junit.Test;
+import static org.junit.Assert.*;
+import org.junit.experimental.theories.suppliers.TestedOn;
 
 /**
  * Created by Jakub Dziworski on 2015-05-09 for purposes of subject "Zaawansowane zagadnienia programowania w Javie"
  */
-public class TimeOfDayTest {
+public class TimeOfDayTest  {
     TimeOfDay sut;
 
     //MINUTES EXCEPTIONS//
@@ -51,5 +54,19 @@ public class TimeOfDayTest {
      public void shouldntThrowIllegaTermExceptionWhenOnBounds() throws Exception {
         sut = new TimeOfDay(23,59);
         sut = new TimeOfDay(0,0);
+    }
+
+    @Test
+    public void shouldBeBeforeOther() throws IllegalTimeOfDayException {
+        sut = new TimeOfDay(22,15);
+        TimeOfDay other = new TimeOfDay(22,14);
+        assertTrue(sut.compareTo(other) > 0);
+    }
+
+    @Test
+    public void shouldBeAfterOther() throws IllegalTimeOfDayException {
+        sut = new TimeOfDay(12,15);
+        TimeOfDay other = new TimeOfDay(15,24);
+        assertTrue(sut.compareTo(other) < 0);
     }
 }

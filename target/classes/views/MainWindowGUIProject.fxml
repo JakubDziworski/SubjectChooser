@@ -16,6 +16,11 @@
                   <MenuItem mnemonicParsing="false" onAction="#closeButtonClicked" text="Close" />
                </items>
             </Menu>
+            <Menu mnemonicParsing="false" text="Edit">
+               <items>
+                  <MenuItem mnemonicParsing="false" onAction="#resetChoicesButtonClicked" text="Reset Choices" />
+               </items>
+            </Menu>
             <Menu mnemonicParsing="false" text="Help">
                <items>
                   <MenuItem mnemonicParsing="false" onAction="#aboutButtonClicked" text="About" />
@@ -23,7 +28,7 @@
             </Menu>
          </menus>
       </MenuBar>
-      <SplitPane dividerPositions="0.18040089086859687" prefWidth="500.0" VBox.vgrow="ALWAYS">
+      <SplitPane fx:id="splitPane" dividerPositions="0.2" prefWidth="500.0" VBox.vgrow="ALWAYS">
          <items>
             <VBox SplitPane.resizableWithParent="false">
                <children>
@@ -42,12 +47,7 @@
                   </HBox>
                </children>
             </VBox>
-            <TreeTableView prefHeight="200.0" prefWidth="200.0">
-              <columns>
-                <TreeTableColumn prefWidth="75.0" text="C1" />
-                <TreeTableColumn prefWidth="75.0" text="C2" />
-              </columns>
-            </TreeTableView>
+            <ScrollPane fx:id="timeTableScrollPane" prefHeight="200.0" prefWidth="200.0" />
          </items>
       </SplitPane>
    </children>

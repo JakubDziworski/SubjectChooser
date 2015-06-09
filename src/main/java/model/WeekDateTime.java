@@ -2,6 +2,7 @@ package model;
 
 
 import exceptions.IllegalTimeOfDayException;
+import managers.ApplicationManager;
 
 public class WeekDateTime implements Comparable<WeekDateTime> {
     private Day day;
@@ -23,7 +24,7 @@ public class WeekDateTime implements Comparable<WeekDateTime> {
 
     public static WeekDateTime DefaultDateTime() {
         try {
-            return new WeekDateTime(Day.MON, 0, 0);
+            return new WeekDateTime(Day.MON, new TimeOfDay(ApplicationManager.Constants.MIN_TIME));
         } catch (IllegalTimeOfDayException e) {}
         return null;
     }

@@ -2,10 +2,13 @@ package managers;
 
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Collections;
 import java.util.List;
+import java.util.stream.Collectors;
 
 import model.Subject;
 
+import model.Term;
 import org.simpleframework.xml.ElementList;
 import org.simpleframework.xml.Root;
 
@@ -26,6 +29,14 @@ public class SubjectManager {
 	public List<Subject> getSubjects() {
 		return subjects;
 	}
+
+	public List<Term> getTerms() {
+		return subjects.stream()
+				.map(subject -> subject.getTerms())
+				.flatMap(l -> l.stream())
+				.collect(Collectors.toList());
+	}
+
 	public void addSubject(Subject subject) {
 		if(subjects.contains(subject) == false) {
 			subjects.add(subject);
@@ -40,6 +51,9 @@ public class SubjectManager {
 	}
 
 	public void clear() {
+		while(!subjects.isEmpty()) {
+			removeSubject(subjects.get(0));
+		}
 		subjects.clear();
 	}
 	

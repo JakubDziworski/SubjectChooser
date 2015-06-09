@@ -4,8 +4,7 @@ import java.io.IOException;
 import java.net.URL;
 import java.util.ResourceBundle;
 
-import javafx.scene.control.Alert;
-import javafx.scene.control.PopupControl;
+import javafx.scene.control.*;
 import managers.ApplicationManager;
 import managers.FileManager;
 import managers.SubjectManager;
@@ -17,9 +16,8 @@ import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
 import javafx.scene.Parent;
-import javafx.scene.control.Button;
-import javafx.scene.control.ListView;
 import javafx.stage.Stage;
+import views.CalendarView;
 
 public class MainWindowController implements Initializable {
 	
@@ -31,6 +29,8 @@ public class MainWindowController implements Initializable {
 	private Button removeSubjectButton;
 	@FXML
 	private Parent root;
+	@FXML
+	private ScrollPane timeTableScrollPane;
 	@FXML
 	private ListView<Subject> subjectsListView;
 	private ObservableList<Subject> listViewtems;
@@ -54,12 +54,14 @@ public class MainWindowController implements Initializable {
 			listViewtems.add(subject);
 		}
 	};
-	
+
 	@Override
 	public void initialize(URL location, ResourceBundle resources) {
 		listViewtems = FXCollections.observableArrayList();
 		subjectsListView.setItems(listViewtems);
 		SubjectManager.getInstance().addSubjectsListener(subjectsListener);
+		CalendarView calendar = new CalendarView();
+		timeTableScrollPane.setContent(calendar);
 	}
 	
 	@FXML
@@ -121,9 +123,15 @@ public class MainWindowController implements Initializable {
 		Stage currentStage = (Stage)root.getScene().getWindow();
 		FileManager.getInstance().SaveAs(currentStage);
 	}
+
+	@FXML
+	void resetChoicesButtonClicked(ActionEvent event) {
+		SubjectManager.getInstance().getSubjects().forEach(subject -> {
+			subject.setSelectedTerm(null);
+		});
+	}
 	
 	@FXML
 	public void closeButtonClicked(ActionEvent event) {
-		
 	}
 }

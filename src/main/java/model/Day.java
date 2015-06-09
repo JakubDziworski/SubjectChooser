@@ -29,7 +29,7 @@ public enum Day {
             case SUN:
                 return ApplicationManager.Strings.DAY_SUN;
             default:
-                return ApplicationManager.Strings.DAY_UNDEFINED;
+                return ApplicationManager.Strings.DAY_MON;
         }
     }
 }

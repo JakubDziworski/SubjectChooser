@@ -3,7 +3,6 @@ package model;
 import java.util.ArrayList;
 import java.util.List;
 
-import javafx.application.Application;
 import managers.ApplicationManager;
 import managers.SubjectManager;
 
@@ -17,11 +16,13 @@ public class Subject {
 	private Subject.Type type;
 	@ElementList
 	List<Term> terms;
+	@Element(required = false)
+	Term selectedTerm;
 
 	public Subject() {
 		terms = new ArrayList<Term>();
-		name = ApplicationManager.Strings.SUBJECT_NAME_UNDEFINED;
-		type = Type.UNKNOWN;
+		name = ApplicationManager.Strings.SUBJECT_NAME_DEFAULT;
+		type = Type.LABORATORY;
 	}
 	
 	public String getName() {
@@ -46,21 +47,31 @@ public class Subject {
 
 	public void setTerms(List<Term> terms) {
 		this.terms = terms;
+		SubjectManager.getInstance().notifySubjectChanged(this);
+	}
+
+	public Term getSelectedTerm() {
+		return selectedTerm;
+	}
+
+	public void setSelectedTerm(Term selectedTerm) {
+		if(selectedTerm == this.selectedTerm) return;
+		this.selectedTerm = selectedTerm;
+		SubjectManager.getInstance().notifySubjectChanged(this);
 	}
 
 	public enum Type {
-		EXCERSISES,
+		EXERCISES,
 		LABORATORY,
 		PROJECT,
 		LECTURE,
-		SEMINARY,
-		UNKNOWN;
+		SEMINARY;
 
 		@Override
 		public String toString() {
 			switch (this) {
-			case EXCERSISES:
-				return ApplicationManager.Strings.SUBJECT_TYPE_EXCERSISES;
+			case EXERCISES:
+				return ApplicationManager.Strings.SUBJECT_TYPE_EXERCISES;
 			case LABORATORY:
 				return ApplicationManager.Strings.SUBJECT_TYPE_LABORATORY;
 			case PROJECT:

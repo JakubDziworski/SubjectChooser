@@ -7,9 +7,13 @@ import org.simpleframework.xml.Root;
 
 import exceptions.IllegalTermException;
 
+import java.util.Collection;
+import java.util.List;
+import java.util.stream.Collectors;
+
 
 @Root
-public class Term {
+public class Term implements Comparable<Term> {
 
 	@Element
 	private String teacher;
@@ -24,7 +28,7 @@ public class Term {
 	private Term(){}
 
 	public Term(WeekDateTime start,WeekDateTime end) throws IllegalTermException {
-		this(start, end, ApplicationManager.Strings.TEACH_UNDEFINED);
+		this(start, end, ApplicationManager.Strings.TEACHER_DEFAULT);
 	}
 	
 	public Term(WeekDateTime start,WeekDateTime end,String teacher) throws IllegalTermException {
@@ -81,6 +85,40 @@ public class Term {
 	}
 	
 	public boolean intersects(Term otherTerm) {
-		return weekDateTimeIsDuringTerm(otherTerm.start) || weekDateTimeIsDuringTerm(otherTerm.end);
+		return weekDateTimeIsDuringTerm(otherTerm.start) || weekDateTimeIsDuringTerm(otherTerm.end)
+				|| otherTerm.weekDateTimeIsDuringTerm(end) || otherTerm.weekDateTimeIsDuringTerm(start);
+	}
+
+	public boolean intersectsAny(Collection<Term> terms) {
+		return terms.stream().filter(term1 -> term1.intersects(this)).findFirst().isPresent();
+	}
+
+	public List<Term> getIntersectedTerms(Collection<Term> terms) {
+		return terms.stream().filter(term1 -> term1.intersects(this)).collect(Collectors.toList());
+	}
+
+	@Override
+	public int compareTo(Term o) {
+		return getStart().compareTo(o.getStart());
+	}
+
+	@Override
+	public boolean equals(Object o) {
+		if (this == o) return true;
+		if (o == null || getClass() != o.getClass()) return false;
+
+		Term term = (Term) o;
+
+		if (teacher != null ? !teacher.equals(term.teacher) : term.teacher != null) return false;
+		if (start != null ? !start.equals(term.start) : term.start != null) return false;
+		return !(end != null ? !end.equals(term.end) : term.end != null);
+	}
+
+	@Override
+	public int hashCode() {
+		int result = teacher != null ? teacher.hashCode() : 0;
+		result = 31 * result + (start != null ? start.hashCode() : 0);
+		result = 31 * result + (end != null ? end.hashCode() : 0);
+		return result;
 	}
 }
