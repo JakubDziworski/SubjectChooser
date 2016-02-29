@@ -35,6 +35,13 @@ public class TermTest {
 	}
 
 	@Test
+	public void identicatlTermsShouldIntersect4() throws Exception {
+		sut = new Term(new WeekDateTime(Day.MON,12,15),new WeekDateTime(Day.MON,14,15));
+		Term otherTerm = new Term(new WeekDateTime(Day.MON,12,15),new WeekDateTime(Day.MON,14,15));
+		assertTrue(sut.intersects(otherTerm));
+	}
+
+	@Test
 	public void intersectingTermsShouldIntersect2() throws Exception {
 		sut = new Term(new WeekDateTime(Day.WED,16,15),new WeekDateTime(Day.WED,18,15));
 		Term otherTerm = new Term(new WeekDateTime(Day.WED,16,15),new WeekDateTime(Day.WED,17,00));

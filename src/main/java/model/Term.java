@@ -81,7 +81,7 @@ public class Term implements Comparable<Term> {
 	}
 
 	public boolean weekDateTimeIsDuringTerm(WeekDateTime time) {
-		return time.compareTo(start) == 1 && time.compareTo(end) == -1;
+		return time.compareTo(start) >= 0 && time.compareTo(end) <= 0;
 	}
 	
 	public boolean intersects(Term otherTerm) {
