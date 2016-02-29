@@ -1,0 +1,9 @@
+<subjectManager>
+   <subjects class="java.util.ArrayList">
+      <subject>
+         <name>Mod i anal syst</name>
+         <type>LABORATORY</type>
+         <terms class="com.sun.javafx.collections.ObservableListWrapper"/>
+      </subject>
+   </subjects>
+</subjectManager>

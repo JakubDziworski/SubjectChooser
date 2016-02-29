@@ -148,7 +148,8 @@ public class CalendarView extends HBox {
         pane.getChildren().add(new Text(subject.getName()));
         pane.getChildren().add(new Text(subject.getSubjectType().toString()));
         pane.getChildren().add(new Text(term.getStart().getTimeOfDay().toString() + " - " + term.getEnd().getTimeOfDay().toString()));
-        pane.setAlignment(Pos.CENTER);
+	pane.getChildren().add(new Text(term.getTeacher()));        
+	pane.setAlignment(Pos.CENTER);
         pane.setOnMouseClicked(event -> {
             subject.setSelectedTerm(term);
         });
