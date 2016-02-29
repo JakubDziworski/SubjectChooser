@@ -1,8 +1,6 @@
 package exceptions;
 
-import javafx.scene.control.Alert;
 import managers.ApplicationManager;
-import sun.plugin.util.UIUtil;
 import utils.UiUtils;
 
 /**

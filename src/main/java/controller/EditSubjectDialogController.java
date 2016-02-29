@@ -3,7 +3,6 @@ package controller;
 import java.net.URL;
 import java.util.*;
 
-import com.sun.istack.internal.Nullable;
 import exceptions.ExceptionHandler;
 import exceptions.IllegalTermException;
 import javafx.beans.property.SimpleStringProperty;
@@ -69,7 +68,7 @@ public class EditSubjectDialogController implements Initializable {
         tryToUpdateTerm(term,null, newValue);
 	};
 
-    private void tryToUpdateTerm(Term term, @Nullable TimeOfDay startTime,@Nullable TimeOfDay endTime) {
+    private void tryToUpdateTerm(Term term, TimeOfDay startTime, TimeOfDay endTime) {
         try {
             if (startTime != null) term.getStart().setTimeOfDay(startTime);
             if (endTime != null) term.getEnd().setTimeOfDay(endTime);
