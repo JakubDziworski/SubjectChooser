@@ -65,7 +65,7 @@ public class CalendarView extends HBox {
                 GridPane pane = gridPerDay.get(day);
                 int column = getColumnForTerm(term, terms);
                 int rowStart = 1+term.getStart().getTimeOfDay().getTotalInMinutes() / TIME_SEED - Constants.MIN_TIME / TIME_SEED;
-                int rowEnd = 1+term.getEnd().getTimeOfDay().getTotalInMinutes() / TIME_SEED - Constants.MIN_TIME / TIME_SEED;
+                int rowEnd = term.getEnd().getTimeOfDay().getTotalInMinutes() / TIME_SEED - Constants.MIN_TIME / TIME_SEED;
                 pane.add(getLayoutForTerm(subject, term), column, rowStart, 1, rowEnd - rowStart + 1);
             }
         }
